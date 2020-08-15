@@ -9,6 +9,7 @@ services:
   - "80"
   volumes:
   - ./www:/var/www/html/
+  - var:/var/www/html/var/
   restart: always
   links:
   - db
@@ -34,3 +35,4 @@ networks:
   backend:
 volumes:
   db_data: {}
+  var: {}
