@@ -1,35 +1,58 @@
 version: "3.2"
 services:
  www:
+# Note: Build to be altered to image: osomanden/debian-noah:latest when in production (moved to github)
   build: . #Include Dockerfile in current directory
   ports:
   - "30001:80"
   - "30443:443"
-  expose:
-  - "80"
   volumes:
-  - ./www:/var/www/html/
-  - var:/var/www/html/var/
+  - "var:/var/www/html/var/"
+  env_file:
+    - .env
   restart: always
-  links:
-  - db
   networks:
   - frontend
   - backend
+  links:
+  - db:db
   depends_on:
   - db
  db:
   image: mysql:latest
+  cap_add:
+  - SYS_NICE  # CAP_SYS_NICE
   ports:
   - "3306:3306"
   command: --default-authentication-plugin=mysql_native_password
   volumes:
-  - ./conf/my.cnf:/etc/mysql/conf.d/my.cnf
-  - db_data:/var/lib/mysql
+  - "./conf/my.cnf:/etc/mysql/conf.d/my.cnf"
+  - "./dump/:/docker-entrypoint-initdb.d"
+  - "db_data:/var/lib/mysql"
+  env_file:
+    - .env
   restart: always
   networks:
   - backend
-
+ phpmyadmin:
+  image: phpmyadmin/phpmyadmin
+  ports:
+  - "8000:80"
+#  environment:
+#   MYSQL_DATABASE: ${MYSQL_DATABASE}
+#   MYSQL_HOST: ${MYSQL_HOST}
+#   MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+#   MYSQL_USER: ${MYSQL_USER}
+#   MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+  env_file:
+    - .env
+  links:
+  - db:db
+  depends_on:
+  - db
+  networks:
+  - frontend
+  - backend
 networks:
   frontend:
   backend:
