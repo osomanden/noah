@@ -22,7 +22,7 @@ RUN apt-get update && apt-get install vim -y && apt-get install locate && update
 # below set in .env file and propagated via docker-compose.yaml
 #ENV MYSQL_HOST=db
 # db As defined in docker-compose.yaml
-#ENV MYSQL_ROOT_PASSWORD=Fr0wn4ndD13!
+#ENV MYSQL_ROOT_PASSWORD=rootpassword!
 #ENV MYSQL_USER=gnf_user
-#ENV MYSQL_PASSWORD=L1v3rT4st3s4wfull!
+#ENV MYSQL_PASSWORD=gnf_userpassword!
 #ENV MYSQL_DATABASE=gnf_noah
