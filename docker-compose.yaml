@@ -1,10 +1,16 @@
 version: "3.2"
 services:
  www:
-  image: osomanden/debian-noah
+# Note: Build to be altered to image: osomanden/debian-noah:latest when in production (moved to github)
+#  build: . #Include Dockerfile in current directory
+# image: osomanden/debian-noah
+  build: .
   ports:
-  - "30001:80"
-  - "30443:443"
+  - "80:80"
+  - "443:443"
+  expose:
+  - "80"
+  - "443"
   volumes:
   - "var:/var/www/html/var/"
   env_file:
@@ -32,25 +38,6 @@ services:
     - .env
   restart: always
   networks:
-  - backend
- phpmyadmin:
-  image: phpmyadmin/phpmyadmin
-  ports:
-  - "8000:80"
-#  environment:
-#   MYSQL_DATABASE: ${MYSQL_DATABASE}
-#   MYSQL_HOST: ${MYSQL_HOST}
-#   MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-#   MYSQL_USER: ${MYSQL_USER}
-#   MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-  env_file:
-    - .env
-  links:
-  - db:db
-  depends_on:
-  - db
-  networks:
-  - frontend
   - backend
 networks:
   frontend:
