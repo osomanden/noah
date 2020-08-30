@@ -3,8 +3,8 @@ services:
  www:
 # Note: Build to be altered to image: osomanden/debian-noah:latest when in production (moved to github)
 #  build: . #Include Dockerfile in current directory
-# image: osomanden/debian-noah
-  build: .
+ image: osomanden/debian-noah
+#  build: .
   ports:
   - "80:80"
   - "443:443"
