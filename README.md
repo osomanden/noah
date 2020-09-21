@@ -8,4 +8,4 @@ Remember to enter Root and User passwords in ".env" file!
 
 Then run : docker run -dti osomanden/debian-noah
 
-Noah should be available on your http://dockerserver:30001
+Noah should be available on your http://<dockerserver name | ip>
